@@ -10,7 +10,7 @@ import module.fileManagement.domain.Document;
 import module.fileManagement.domain.metadata.Metadata;
 import module.fileManagement.domain.metadata.MetadataTemplate;
 import pt.ist.bennu.core.domain.groups.legacy.PersistentGroup;
-import pt.ist.bennu.core.util.legacy.BundleUtil;
+import pt.ist.bennu.core.util.legacy.LegacyBundleUtil;
 
 /**
  * @author João Antunes (joao.antunes@tagus.ist.utl.pt) - 4 de Mai de 2012
@@ -38,13 +38,13 @@ public abstract class ProcessDocumentMetaDataResolver<P extends ProcessFile> {
      *         retrieved or to be created if it doesn't exist
      */
     public String getMetadataTemplateNameToUseOrCreate(Class<? extends ProcessFile> classToUse) {
-        return BundleUtil.getLocalizedNamedFroClass(classToUse);
+        return LegacyBundleUtil.getLocalizedNamedFroClass(classToUse);
     }
 
     public Map<String, String> getMetadataKeysAndValuesMap(P processDocument) {
         Map<String, String> metadataMap = new HashMap<String, String>();
         metadataMap.put(PROCESS_IDENTIFIER, processDocument.getProcess().getProcessNumber());
-        metadataMap.put(PROCESS_TYPE, BundleUtil.getLocalizedNamedFroClass(processDocument.getProcess().getClass()));
+        metadataMap.put(PROCESS_TYPE, LegacyBundleUtil.getLocalizedNamedFroClass(processDocument.getProcess().getClass()));
         return metadataMap;
     }
 

@@ -98,7 +98,7 @@ public class WorkflowProcessFiles extends OutputRenderer {
                 blockContainer.addChild(container);
 
                 if (shouldShowLabel) {
-                    container.addChild(new HtmlText(pt.ist.bennu.core.util.legacy.BundleUtil.getLocalizedNamedFroClass(fileType)
+                    container.addChild(new HtmlText(pt.ist.bennu.core.util.legacy.LegacyBundleUtil.getLocalizedNamedFroClass(fileType)
                             + ": "));
                 }
 

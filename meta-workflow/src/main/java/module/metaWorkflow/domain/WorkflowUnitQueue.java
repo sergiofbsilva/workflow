@@ -38,7 +38,7 @@ import module.workflow.domain.WorkflowSystem;
 import module.workflow.util.WorkflowQueueBean;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.util.ClassNameBundle;
+import pt.ist.bennu.core.util.legacy.ClassNameBundle;
 import pt.ist.fenixframework.Atomic;
 
 @ClassNameBundle(bundle = "resources/MetaWorkflowResources")

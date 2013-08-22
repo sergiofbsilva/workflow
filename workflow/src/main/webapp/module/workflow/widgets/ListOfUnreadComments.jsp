@@ -52,7 +52,7 @@
 	{
 	     oldProcessClass = process.getClass();
 	     %>
-	     	<h3 class="mtop1 mbottom1"><%=BundleUtil.getLocalizedNamedFroClass(process.getClass())%></h3>
+	     	<h3 class="mtop1 mbottom1"><%=LegacyBundleUtil.getLocalizedNamedFroClass(process.getClass())%></h3>
 	     
 	<% }
 	   %>

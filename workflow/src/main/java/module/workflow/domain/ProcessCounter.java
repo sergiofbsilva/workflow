@@ -28,7 +28,7 @@ import java.util.Comparator;
 
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.legacy.BundleUtil;
+import pt.ist.bennu.core.util.legacy.LegacyBundleUtil;
 
 /**
  * 
@@ -44,8 +44,8 @@ public class ProcessCounter {
             final Class c1 = o1.getProcessClass();
             final Class c2 = o2.getProcessClass();
 
-            final String s1 = BundleUtil.getLocalizedNamedFroClass(c1);
-            final String s2 = BundleUtil.getLocalizedNamedFroClass(c2);
+            final String s1 = LegacyBundleUtil.getLocalizedNamedFroClass(c1);
+            final String s2 = LegacyBundleUtil.getLocalizedNamedFroClass(c2);
 
             return s1.compareTo(s2);
         }

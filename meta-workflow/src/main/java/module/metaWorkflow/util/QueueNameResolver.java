@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import module.workflow.domain.WorkflowQueue;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
 
 // SWITCH MODULE
 
@@ -48,7 +48,7 @@ public class QueueNameResolver {
 
     public static String getNameFor(Class<? extends WorkflowQueue> queueType) {
         Resolver resolver = nameMap.get(queueType);
-        return BundleUtil.getStringFromResourceBundle(resolver.getBundle(), resolver.getKey());
+        return BundleUtil.getString(resolver.getBundle(), resolver.getKey());
     }
 
     private static class Resolver {

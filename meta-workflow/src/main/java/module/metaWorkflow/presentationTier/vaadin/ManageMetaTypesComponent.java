@@ -32,9 +32,10 @@ import module.metaWorkflow.domain.WorkflowMetaType;
 import module.vaadin.ui.BennuTheme;
 import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowSystem;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.RoleType;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.LegacyUtil;
 import pt.ist.vaadinframework.EmbeddedApplication;
 import pt.ist.vaadinframework.annotation.EmbeddedComponent;
 import pt.ist.vaadinframework.data.reflect.DomainContainer;
@@ -82,7 +83,8 @@ public class ManageMetaTypesComponent extends CustomComponent implements Embedde
                     List<Class<? extends ProcessFile>> fileClasses = (List<Class<? extends ProcessFile>>) property.getValue();
                     Iterator<Class<? extends ProcessFile>> fileIterator = fileClasses.iterator();
                     while (fileIterator.hasNext()) {
-                        strBuilder.append(BundleUtil.getLocalizedNamedFroClass(fileIterator.next()));
+                        strBuilder
+                                .append(pt.ist.bennu.core.util.legacy.LegacyBundleUtil.getLocalizedNamedFroClass(fileIterator.next()));
                         if (fileIterator.hasNext()) {
                             strBuilder.append(", ");
                         }
@@ -125,12 +127,12 @@ public class ManageMetaTypesComponent extends CustomComponent implements Embedde
     }
 
     private String getMessage(String message) {
-        return BundleUtil.getFormattedStringFromResourceBundle(RESOURCE_BUNDLE, message);
+        return BundleUtil.getString(RESOURCE_BUNDLE, message);
     }
 
     @Override
     public boolean isAllowedToOpen(Map<String, String> arguments) {
-        return UserView.getCurrentUser().hasRoleType(RoleType.MANAGER);
+        return LegacyUtil.hasRoleType(Authenticate.getUser(), RoleType.MANAGER);
     }
 
     @Override

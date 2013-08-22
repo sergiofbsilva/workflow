@@ -109,7 +109,7 @@ width: 45px !important;
 					</td>
 					<td class="file-name"><div><bean:write name="file" property="filename"/></div></td>
 					<td class="file-desc"><div><bean:write name="file" property="displayName"/></div></td>
-					<td class="file-type"><%=BundleUtil.getLocalizedNamedFroClass(document.getClass())%></td>
+					<td class="file-type"><%=LegacyBundleUtil.getLocalizedNamedFroClass(document.getClass())%></td>
 					<td class="file-ash"><div><bean:write name="file" property="hexSHA1MessageDigest"/></div></td>
 					<td><fr:view name="file" property="filesize" layout="fileSize"/></td>
 					<logic:equal name="fileNode" property="inTrash" value="false" >

@@ -27,7 +27,7 @@ package module.metaWorkflow.domain;
 import java.util.Comparator;
 
 import jvstm.cps.ConsistencyPredicate;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
+import module.metaWorkflow.exceptions.MetaWorkflowDomainException;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -110,7 +110,7 @@ public class MetaProcessState extends MetaProcessState_Base {
     @Atomic
     public void delete() {
         if (!getDependingConfigsSet().isEmpty()) {
-            throw new DomainException("error.state.has.depending.states");
+            throw new MetaWorkflowDomainException("error.state.has.depending.states");
         }
         for (MetaProcessStateConfig config : getConfigs()) {
             config.delete();

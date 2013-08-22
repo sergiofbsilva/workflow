@@ -34,9 +34,9 @@ import module.workflow.domain.WorkflowQueue;
 
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.util.Search;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * 
@@ -102,7 +102,7 @@ public class SearchMetaWorkflowProcess extends Search<WorkflowMetaProcess> {
     }
 
     private Collection<WorkflowMetaProcess> getProcesses() {
-        final User currentUser = UserView.getCurrentUser();
+        final User currentUser = Authenticate.getUser();
         return WorkflowProcess.getAllProcesses(WorkflowMetaProcess.class, new Predicate() {
 
             @Override

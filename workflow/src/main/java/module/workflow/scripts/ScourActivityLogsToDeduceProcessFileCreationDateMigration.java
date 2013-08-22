@@ -37,7 +37,7 @@ import module.workflow.domain.WorkflowProcess;
 
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.util.legacy.BundleUtil;
+import pt.ist.bennu.core.util.legacy.LegacyBundleUtil;
 import pt.ist.bennu.io.domain.FileSupport;
 import pt.ist.bennu.io.domain.GenericFile;
 import pt.ist.bennu.scheduler.custom.CustomTask;
@@ -97,7 +97,7 @@ public class ScourActivityLogsToDeduceProcessFileCreationDateMigration extends C
                             && (filename == null || logDescription.contains(filename))
                             && (processFile.getDisplayName() == null || logDescription.contains(processFile.getDisplayName()))) {
                         //let's make sure this is the entry!
-                        String fileTypeName = BundleUtil.getLocalizedNamedFroClass(processFile.getClass());
+                        String fileTypeName = LegacyBundleUtil.getLocalizedNamedFroClass(processFile.getClass());
                         if (logDescription.contains(fileTypeName)) {
                             //we found one!!
                             foundTimestamp = true;

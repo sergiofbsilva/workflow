@@ -29,6 +29,7 @@
 			<plugin>
 				<groupId>com.alexnederlof</groupId>
 				<artifactId>jasperreports-plugin</artifactId>
+				<version>1.6</version>
 			</plugin>
 		</plugins>
 	</build>

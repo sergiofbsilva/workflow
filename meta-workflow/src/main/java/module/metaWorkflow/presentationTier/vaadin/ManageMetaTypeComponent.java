@@ -10,9 +10,10 @@ import module.metaWorkflow.domain.WorkflowMetaProcess;
 import module.metaWorkflow.domain.WorkflowMetaType;
 import module.metaWorkflow.domain.WorkflowMetaTypeVersion;
 import module.vaadin.ui.BennuTheme;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.RoleType;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.LegacyUtil;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.vaadinframework.EmbeddedApplication;
 import pt.ist.vaadinframework.annotation.EmbeddedComponent;
@@ -57,7 +58,7 @@ public class ManageMetaTypeComponent extends CustomComponent implements Embedded
      */
     @Override
     public boolean isAllowedToOpen(Map<String, String> arg0) {
-        return UserView.getCurrentUser().hasRoleType(RoleType.MANAGER);
+        return LegacyUtil.hasRoleType(Authenticate.getUser(), RoleType.MANAGER);
     }
 
     /*
@@ -173,7 +174,7 @@ public class ManageMetaTypeComponent extends CustomComponent implements Embedded
     }
 
     private String getMessage(String message, String... arguments) {
-        return BundleUtil.getFormattedStringFromResourceBundle(RESOURCE_BUNDLE, message, arguments);
+        return BundleUtil.getString(RESOURCE_BUNDLE, message, arguments);
     }
 
 }

@@ -16,9 +16,10 @@ import module.vaadin.ui.BennuTheme;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.RoleType;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.LegacyUtil;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.vaadinframework.annotation.EmbeddedComponent;
 import pt.ist.vaadinframework.data.reflect.DomainContainer;
@@ -62,7 +63,7 @@ public class ManageMetaFieldsComponent extends CustomComponent implements Embedd
      */
     @Override
     public boolean isAllowedToOpen(Map<String, String> arg0) {
-        return UserView.getCurrentUser().hasRoleType(RoleType.MANAGER);
+        return LegacyUtil.hasRoleType(Authenticate.getUser(), RoleType.MANAGER);
     }
 
     ManageMetaFieldsComponent(WorkflowMetaTypeVersion metaTypeVersion) {
@@ -83,7 +84,7 @@ public class ManageMetaFieldsComponent extends CustomComponent implements Embedd
     }
 
     private static String getMessage(String message, String... args) {
-        return BundleUtil.getFormattedStringFromResourceBundle(RESOURCE_BUNDLE, message, args);
+        return BundleUtil.getString(RESOURCE_BUNDLE, message, args);
     }
 
     private MetaField selectedMetaField = null;

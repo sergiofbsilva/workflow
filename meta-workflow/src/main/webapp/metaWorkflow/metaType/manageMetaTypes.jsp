@@ -37,7 +37,7 @@
 					Iterator<java.lang.Class<? extends ProcessFile>> iterator = metaType.getAvailableFileTypes().iterator();
 					while (iterator.hasNext()) {
 				    	Class<? extends ProcessFile> fileType = iterator.next();
-				    	%> <%= BundleUtil.getLocalizedNamedFroClass(fileType) %> <%
+				    	%> <%=LegacyBundleUtil.getLocalizedNamedFroClass(fileType)%> <%
 				    	if (iterator.hasNext()) {
 							%> <%= ", " %> <%
 				    	}

@@ -48,13 +48,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.bennu.core.util.VariantBean;
+import pt.ist.bennu.search.DomainIndexer;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.plugins.luceneIndexing.DomainIndexer;
 
 @Mapping(path = "/metaWorkflow")
 /**
@@ -69,7 +69,7 @@ public class MetaWorkflowAction extends ContextBaseAction {
 
     private ActionForward viewMetaProcessList(final HttpServletRequest request) {
         request.setAttribute("searchBean", new VariantBean());
-        final User currentUser = UserView.getCurrentUser();
+        final User currentUser = Authenticate.getUser();
         request.setAttribute("user", currentUser);
         List<WorkflowQueue> sortedQueues = new ArrayList<WorkflowQueue>(WorkflowMetaType.getAllQueuesForUser(currentUser));
         Collections.sort(sortedQueues, WorkflowQueue.COMPARATOR_BY_NAME);
@@ -81,7 +81,7 @@ public class MetaWorkflowAction extends ContextBaseAction {
     public ActionForward viewOpenProcessesInMyQueues(final ActionMapping mapping, final ActionForm form,
             final HttpServletRequest request, final HttpServletResponse response) {
 
-        final User currentUser = UserView.getCurrentUser();
+        final User currentUser = Authenticate.getUser();
         request.setAttribute("openProcesses", WorkflowProcess.getAllProcesses(WorkflowMetaProcess.class, new Predicate() {
 
             @Override
@@ -106,7 +106,7 @@ public class MetaWorkflowAction extends ContextBaseAction {
     public ActionForward viewAllOpenProcesses(final ActionMapping mapping, final ActionForm form,
             final HttpServletRequest request, final HttpServletResponse response) {
 
-        final User currentUser = UserView.getCurrentUser();
+        final User currentUser = Authenticate.getUser();
         request.setAttribute("displayProcesses", WorkflowProcess.getAllProcesses(WorkflowMetaProcess.class, new Predicate() {
 
             @Override
@@ -123,7 +123,7 @@ public class MetaWorkflowAction extends ContextBaseAction {
     public ActionForward viewOwnProcesses(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
 
-        final User currentUser = UserView.getCurrentUser();
+        final User currentUser = Authenticate.getUser();
         request.setAttribute("myProcess", currentUser.getMetaProcessesSet());
 
         return viewMetaProcessList(request);
@@ -297,7 +297,7 @@ public class MetaWorkflowAction extends ContextBaseAction {
         // TODO : Add people to notify when creating comment.
         final CommentBean commentBean = new CommentBean(process);
         commentBean.setComment(comment);
-        process.createComment(UserView.getCurrentUser(), commentBean);
+        process.createComment(Authenticate.getUser(), commentBean);
 
         RenderUtils.invalidateViewState("comment");
         return ProcessManagement.forwardToProcess(process);

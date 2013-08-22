@@ -47,7 +47,9 @@
 	<logic:notEmpty name="numberUnreadCommentsPerProcess">
 		<table class="width100pc">
 			<logic:iterate id="process" name="numberUnreadCommentsPerProcess" indexId="numberOfProcessType">
-						<%String nameForProcessClass = BundleUtil.getLocalizedNamedFroClass(((Map.Entry<Class,Integer>) process).getKey());%>
+						<%
+						    String nameForProcessClass = LegacyBundleUtil.getLocalizedNamedFroClass(((Map.Entry<Class,Integer>) process).getKey());
+						%>
 				<tr>
 					<td>
 						<%=nameForProcessClass.toString()%>

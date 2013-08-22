@@ -30,7 +30,7 @@ import module.workflow.domain.WorkflowSystem;
 
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * 
@@ -47,7 +47,7 @@ public class WorkflowMetaTypeDescription extends WorkflowMetaTypeDescription_Bas
         super.setDate(new DateTime());
         super.setVersion(version);
         super.setWorkflowSystem(WorkflowSystem.getInstance());
-        super.setVersionOwner(UserView.getCurrentUser());
+        super.setVersionOwner(Authenticate.getUser());
     }
 
     @Override

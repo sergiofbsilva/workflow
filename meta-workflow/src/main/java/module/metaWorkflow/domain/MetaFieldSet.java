@@ -29,7 +29,7 @@ import java.util.TreeSet;
 
 import module.metaWorkflow.exceptions.MetaWorkflowDomainException;
 import module.metaWorkflow.presentationTier.dto.MetaFieldBean;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -101,7 +101,7 @@ public class MetaFieldSet extends MetaFieldSet_Base {
             throw new Error("Cannot delete the root MetaFieldSet");
         }
         if (!getChildFieldsSet().isEmpty()) {
-            throw new RuntimeException(BundleUtil.getStringFromResourceBundle("resources/MetaWorkflowResources",
+            throw new RuntimeException(BundleUtil.getString("resources/MetaWorkflowResources",
                     "label.error.cannotDelete.FieldSet.before.childFields"));
         }
 

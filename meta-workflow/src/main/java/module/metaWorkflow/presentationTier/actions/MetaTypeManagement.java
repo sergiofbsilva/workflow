@@ -42,8 +42,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.i18n.BundleUtil;
 import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
-import pt.ist.bennu.core.util.BundleUtil;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
@@ -137,8 +137,7 @@ public class MetaTypeManagement extends ContextBaseAction {
         if ((fieldBean.getName() == null) || (fieldBean.getName().getContent() == null)
                 || fieldBean.getName().getContent().trim().isEmpty()) {
             request.setAttribute("fieldBean", fieldBean);
-            addLocalizedMessage(request,
-                    BundleUtil.getStringFromResourceBundle("resources/MetaWorkflowResources", "label.error.fieldNameRequired"));
+            addLocalizedMessage(request, BundleUtil.getString("resources/MetaWorkflowResources", "label.error.fieldNameRequired"));
             return forward(request, "/metaWorkflow/metaType/addField.jsp");
         }
 

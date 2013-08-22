@@ -38,10 +38,11 @@ import module.metaWorkflow.domain.MetaProcessStateConfig;
 import module.metaWorkflow.domain.WorkflowMetaType;
 import module.metaWorkflow.domain.WorkflowMetaTypeVersion;
 import module.vaadin.ui.BennuTheme;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.RoleType;
 import pt.ist.bennu.core.domain.exceptions.DomainException;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.LegacyUtil;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.vaadinframework.annotation.EmbeddedComponent;
 import pt.ist.vaadinframework.data.reflect.DomainContainer;
@@ -475,12 +476,12 @@ public class ManageMetaProcessStatesComponent extends CustomComponent implements
     }
 
     private static String getMessage(String message, String... args) {
-        return BundleUtil.getFormattedStringFromResourceBundle(RESOURCE_BUNDLE, message, args);
+        return BundleUtil.getString(RESOURCE_BUNDLE, message, args);
     }
 
     @Override
     public boolean isAllowedToOpen(Map<String, String> arguments) {
-        return UserView.getCurrentUser().hasRoleType(RoleType.MANAGER);
+        return LegacyUtil.hasRoleType(Authenticate.getUser(), RoleType.MANAGER);
     }
 
     @Override

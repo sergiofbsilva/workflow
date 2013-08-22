@@ -29,8 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 import module.organization.domain.OrganizationalModel;
 import module.organization.domain.Party;
 import module.organization.presentationTier.actions.PartyViewHook;
+import pt.ist.bennu.core.i18n.BundleUtil;
 import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
-import pt.ist.bennu.core.util.BundleUtil;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/metaWorkflowOrganizationModel")
@@ -55,7 +55,7 @@ public class OrganizationModelPluginAction extends ContextBaseAction {
 
         @Override
         public String getPresentationName() {
-            return BundleUtil.getStringFromResourceBundle("resources.MetaWorkflowResources", "label.queueView");
+            return BundleUtil.getString("resources.MetaWorkflowResources", "label.queueView");
         }
 
         @Override

@@ -11,7 +11,7 @@ import module.metaWorkflow.util.versioning.DiffUtil.Revision;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 
 public class WorkflowMetaTypeVersion extends WorkflowMetaTypeVersion_Base implements Comparable<WorkflowMetaTypeVersion> {
@@ -79,7 +79,7 @@ public class WorkflowMetaTypeVersion extends WorkflowMetaTypeVersion_Base implem
         if (getPublished()) {
             throw new MetaWorkflowDomainException("already.published");
         }
-        super.setPublisherOfVersion(UserView.getCurrentUser());
+        super.setPublisherOfVersion(Authenticate.getUser());
         super.setPublicationMotive(publicationMotive);
         super.setDatePublication(new DateTime());
         super.setPublished(true);
@@ -101,7 +101,7 @@ public class WorkflowMetaTypeVersion extends WorkflowMetaTypeVersion_Base implem
         if (getPublished()) {
             throw new MetaWorkflowDomainException("cant.change.metaTypeDescription.on.published.version");
         }
-        super.setPublisherOfVersion(UserView.getCurrentUser());
+        super.setPublisherOfVersion(Authenticate.getUser());
     }
 
     @Override

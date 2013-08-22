@@ -31,7 +31,7 @@ import module.workflow.activities.ChangeQueue;
 import module.workflow.activities.ChangeQueueInformation;
 import module.workflow.domain.WorkflowQueue;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
 
 /**
  * 
@@ -62,9 +62,9 @@ public class ChangeMetaQueue extends ChangeQueue<WorkflowMetaProcess> {
         String queuesDescription = "";
         if (activityInformation.hasAnyQueuesToRemove()) {
             if (activityInformation.hasAnyQueuesToAdd()) {
-                queuesDescription += BundleUtil.getStringFromResourceBundle(getUsedBundle(), "label.from");
+                queuesDescription += BundleUtil.getString(getUsedBundle(), "label.from");
             } else {
-                queuesDescription += BundleUtil.getStringFromResourceBundle(getUsedBundle(), "label.removedFrom");
+                queuesDescription += BundleUtil.getString(getUsedBundle(), "label.removedFrom");
             }
 
             queuesDescription += " ";
@@ -81,7 +81,7 @@ public class ChangeMetaQueue extends ChangeQueue<WorkflowMetaProcess> {
             if (activityInformation.hasAnyQueuesToRemove()) {
                 queuesDescription += " | ";
             }
-            queuesDescription += BundleUtil.getStringFromResourceBundle(getUsedBundle(), "label.to");
+            queuesDescription += BundleUtil.getString(getUsedBundle(), "label.to");
 
             queuesDescription += " ";
             Iterator<WorkflowQueue> queuesToAdd = activityInformation.getQueuesToAdd().iterator();

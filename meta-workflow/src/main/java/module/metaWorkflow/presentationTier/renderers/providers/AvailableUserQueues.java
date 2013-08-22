@@ -27,8 +27,8 @@ package module.metaWorkflow.presentationTier.renderers.providers;
 import java.util.Collections;
 
 import module.metaWorkflow.domain.WorkflowMetaType;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -46,7 +46,7 @@ public class AvailableUserQueues implements DataProvider {
 
     @Override
     public Object provide(Object source, Object value) {
-        User user = UserView.getCurrentUser();
+        User user = Authenticate.getUser();
         if (user == null) {
             return Collections.EMPTY_LIST;
         }

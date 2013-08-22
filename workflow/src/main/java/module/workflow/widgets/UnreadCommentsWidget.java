@@ -57,8 +57,8 @@ public class UnreadCommentsWidget extends WidgetController {
             final Class<? extends WorkflowProcess> c1 = o1.getClass();
             final Class<? extends WorkflowProcess> c2 = o2.getClass();
 
-            final String s1 = pt.ist.bennu.core.util.legacy.BundleUtil.getLocalizedNamedFroClass(c1);
-            final String s2 = pt.ist.bennu.core.util.legacy.BundleUtil.getLocalizedNamedFroClass(c2);
+            final String s1 = pt.ist.bennu.core.util.legacy.LegacyBundleUtil.getLocalizedNamedFroClass(c1);
+            final String s2 = pt.ist.bennu.core.util.legacy.LegacyBundleUtil.getLocalizedNamedFroClass(c2);
 
             return s1.compareTo(s2);
         }

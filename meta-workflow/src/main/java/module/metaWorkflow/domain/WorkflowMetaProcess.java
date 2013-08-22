@@ -32,14 +32,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import jvstm.cps.ConsistencyPredicate;
 import module.metaWorkflow.activities.ChangeMetaQueue;
 import module.metaWorkflow.activities.ChangeRequestor;
 import module.metaWorkflow.activities.CloseMetaProcess;
 import module.metaWorkflow.activities.EditFieldValue;
 import module.metaWorkflow.activities.OpenMetaProcess;
+import module.metaWorkflow.exceptions.MetaWorkflowDomainException;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.AddObserver;
 import module.workflow.activities.GiveProcess;
@@ -60,15 +59,14 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.bennu.core.util.ClassNameBundle;
-import pt.ist.emailNotifier.domain.Email;
+import pt.ist.bennu.core.i18n.BundleUtil;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.ClassNameBundle;
+import pt.ist.bennu.email.domain.Email;
+import pt.ist.bennu.search.IndexDocument;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.plugins.luceneIndexing.domain.IndexDocument;
 
 @ClassNameBundle(key = "label.module.metaWorkflow", bundle = "resources/MetaWorkflowResources")
 /**
@@ -141,7 +139,7 @@ public class WorkflowMetaProcess extends WorkflowMetaProcess_Base {
         setMetaTypeVersion(type.getCurrentPublishedWMTVersion());
         setSubject(subject);
         setProcessNumber(new LocalDate().getYear() + "-" + type.getNextIdentifier());
-        setCreator(UserView.getCurrentUser());
+        setCreator(Authenticate.getUser());
         setCreationDate(new DateTime());
         setInstanceDescription(instanceDescription);
         open();
@@ -264,7 +262,7 @@ public class WorkflowMetaProcess extends WorkflowMetaProcess_Base {
     @Override
     public void addCurrentQueues(WorkflowQueue queue) {
         if (!queue.getMetaType().equals(getMetaType())) {
-            throw new DomainException("error.queue.has.different.metaType");
+            throw new MetaWorkflowDomainException("error.queue.has.different.metaType");
         }
         super.addCurrentQueues(queue);
     }
@@ -310,11 +308,11 @@ public class WorkflowMetaProcess extends WorkflowMetaProcess_Base {
             toAddress.add(email);
 
             final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
-            new Email(virtualHost.getApplicationSubTitle().getContent(), virtualHost.getSystemEmailAddress(), new String[] {},
-                    toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST, BundleUtil.getFormattedStringFromResourceBundle(
-                            "resources/MetaWorkflowResources", "label.email.commentCreated.subject", getProcessNumber()),
-                    BundleUtil.getFormattedStringFromResourceBundle("resources/MetaWorkflowResources",
-                            "label.email.commentCreated.body", UserView.getCurrentUser().getPerson().getPresentationName(),
+            new Email(virtualHost.getConfiguration().getApplicationSubTitle().getContent(), virtualHost.getConfiguration()
+                    .getSystemEmailAddress(), new String[] {}, toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
+                    BundleUtil.getString("resources/MetaWorkflowResources", "label.email.commentCreated.subject",
+                            getProcessNumber()), BundleUtil.getString("resources/MetaWorkflowResources",
+                            "label.email.commentCreated.body", Authenticate.getUser().getPerson().getPresentationName(),
                             getProcessNumber(), comment));
         }
     }
@@ -343,8 +341,7 @@ public class WorkflowMetaProcess extends WorkflowMetaProcess_Base {
         public final static String REQUESTOR = "Requisitante";
 
         @Override
-        public @Nonnull
-        Class<? extends AbstractWFDocsGroup> getWriteGroupClass() {
+        public Class<? extends AbstractWFDocsGroup> getWriteGroupClass() {
             return WFDocsDefaultWriteGroup.class;
         }
 

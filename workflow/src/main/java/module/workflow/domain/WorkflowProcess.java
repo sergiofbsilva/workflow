@@ -52,7 +52,7 @@ import org.joda.time.Interval;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.VirtualHost;
 import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.legacy.BundleUtil;
+import pt.ist.bennu.core.util.legacy.LegacyBundleUtil;
 import pt.ist.bennu.search.IndexDocument;
 import pt.ist.bennu.search.Indexable;
 import pt.ist.bennu.search.IndexableField;
@@ -421,7 +421,7 @@ public abstract class WorkflowProcess extends WorkflowProcess_Base implements Se
             if (file.shouldFileContentAccessBeLogged()) {
                 String nameToLog = file.getDisplayName() != null ? file.getDisplayName() : file.getFilename();
                 new FileAccessLog(this, Authenticate.getUser(), file.getFilename(), nameToLog,
-                        BundleUtil.getLocalizedNamedFroClass(file.getClass()));
+                        LegacyBundleUtil.getLocalizedNamedFroClass(file.getClass()));
             }
         } else {
             throw new WorkflowDomainException("label.error.workflowProcess.noSupportForFiles");
@@ -454,7 +454,7 @@ public abstract class WorkflowProcess extends WorkflowProcess_Base implements Se
             addFiles(file, true);
             file.postProcess(bean);
             new FileUploadLog(this, Authenticate.getUser(), file.getFilename(), file.getDisplayName(),
-                    BundleUtil.getLocalizedNamedFroClass(file.getClass()), bean.getExtraArguments());
+                    LegacyBundleUtil.getLocalizedNamedFroClass(file.getClass()), bean.getExtraArguments());
 
             return file;
         }
@@ -583,7 +583,7 @@ public abstract class WorkflowProcess extends WorkflowProcess_Base implements Se
         addDeletedFiles(file);
         file.processRemoval();
         String nameToLog = file.getDisplayName() != null ? file.getDisplayName() : file.getFilename();
-        new FileRemoveLog(this, Authenticate.getUser(), file.getFilename(), nameToLog, BundleUtil.getLocalizedNamedFroClass(file
+        new FileRemoveLog(this, Authenticate.getUser(), file.getFilename(), nameToLog, LegacyBundleUtil.getLocalizedNamedFroClass(file
                 .getClass()));
 
     }
@@ -610,7 +610,7 @@ public abstract class WorkflowProcess extends WorkflowProcess_Base implements Se
         document.processRemoval();
         String nameToLog = document.getDisplayName() != null ? document.getDisplayName() : document.getFilename();
         new FileRemoveLog(this, Authenticate.getUser(), document.getFilename(), nameToLog,
-                BundleUtil.getLocalizedNamedFroClass(document.getClass()));
+                LegacyBundleUtil.getLocalizedNamedFroClass(document.getClass()));
     }
 
     public List<WorkflowProcessComment> getUnreadCommentsForCurrentUser() {
@@ -938,11 +938,10 @@ public abstract class WorkflowProcess extends WorkflowProcess_Base implements Se
         return getObservers().contains(user);
     }
 
-    //TODO: bennu-search
-//    @Override
-//    public Set<Indexable> getObjectsToIndex() {
-//        return Collections.singleton((Indexable) this);
-//    }
+    @Override
+    public Set<Indexable> getObjectsToIndex() {
+        return Collections.singleton((Indexable) this);
+    }
 
     /**
      * The WorkflowProcess is integrated with the LuceneSearchPlugin to use

@@ -36,8 +36,7 @@ import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowQueue;
 import module.workflow.domain.WorkflowSystem;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.Strings;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -63,9 +62,9 @@ public class WorkflowMetaType extends WorkflowMetaType_Base {
         super.setSuporttedFileClasses(new Strings(Collections.EMPTY_LIST));
 
         MultiLanguageString rootFieldSetName =
-                new MultiLanguageString(Language.pt, BundleUtil.getStringFromResourceBundle("resources/MetaWorkflowResources",
+                new MultiLanguageString(Language.pt, BundleUtil.getString("resources/MetaWorkflowResources",
                         "label.rootFieldSetPT")).with(Language.en,
-                        BundleUtil.getStringFromResourceBundle("resources/MetaWorkflowResources", "label.rootFieldSetEN"));
+                        BundleUtil.getString("resources/MetaWorkflowResources", "label.rootFieldSetEN"));
         super.setFieldSet(new MetaFieldSet(rootFieldSetName, 1));
         super.addVersions(version);
     }
@@ -218,7 +217,7 @@ public class WorkflowMetaType extends WorkflowMetaType_Base {
     @Atomic
     public void addQueues(WorkflowQueue queues) {
         if (queues.getMetaType() != null) {
-            throw new DomainException("error.queue.already.has.metaType");
+            throw new MetaWorkflowDomainException("error.queue.already.has.metaType");
         }
 
         super.addQueues(queues);

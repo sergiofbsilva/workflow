@@ -8,7 +8,7 @@ import module.metaWorkflow.domain.WorkflowMetaTypeVersion;
 import module.workflow.domain.WorkflowSystem;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.scheduler.WriteCustomTask;
+import pt.ist.bennu.scheduler.custom.CustomTask;
 
 /**
  * @author João Antunes (joao.antunes@tagus.ist.utl.pt) - 14 de Jun de 2012
@@ -17,7 +17,7 @@ import pt.ist.bennu.core.domain.scheduler.WriteCustomTask;
  *         WorkflowMetaType to WorkflowMetaTypeVersion
  * 
  */
-public class MigrateDataToMetaTypeVersion extends WriteCustomTask {
+public class MigrateDataToMetaTypeVersion extends CustomTask {
 
     /*
      * (non-Javadoc)
@@ -25,7 +25,7 @@ public class MigrateDataToMetaTypeVersion extends WriteCustomTask {
      * @see pt.ist.bennu.core.domain.scheduler.WriteCustomTask#doService()
      */
     @Override
-    protected void doService() {
+    public void runTask() {
 
         int migratedWorkflowMetaTypes = 0;
         int wronglyMigrated = 0;
@@ -68,8 +68,8 @@ public class MigrateDataToMetaTypeVersion extends WriteCustomTask {
             VirtualHost.releaseVirtualHostFromThread();
         }
 
-        out.println("Summary:");
-        out.println("From " + totalNrMetaTypes + " metaTypes, migrated " + migratedWorkflowMetaTypes + " and " + wronglyMigrated
+        taskLog("Summary:");
+        taskLog("From " + totalNrMetaTypes + " metaTypes, migrated " + migratedWorkflowMetaTypes + " and " + wronglyMigrated
                 + " had errors in the migration");
 
     }

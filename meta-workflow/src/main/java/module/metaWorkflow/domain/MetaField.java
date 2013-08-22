@@ -35,7 +35,7 @@ import module.metaWorkflow.presentationTier.dto.MetaFieldBean;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -99,7 +99,7 @@ public abstract class MetaField extends MetaField_Base {
     }
 
     public String getLocalizedClassName() {
-        return BundleUtil.getStringFromResourceBundle("resources/MetaWorkflowResources", "label." + getClass().getName());
+        return BundleUtil.getString("resources/MetaWorkflowResources", "label." + getClass().getName());
     }
 
     /**

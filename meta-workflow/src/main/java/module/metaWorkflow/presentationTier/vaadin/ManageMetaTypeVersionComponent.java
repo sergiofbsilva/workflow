@@ -16,10 +16,11 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.vaadin.dialogs.ConfirmDialog;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.RoleType;
 import pt.ist.bennu.core.domain.exceptions.DomainException;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.LegacyUtil;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.vaadinframework.EmbeddedApplication;
 import pt.ist.vaadinframework.annotation.EmbeddedComponent;
@@ -66,7 +67,7 @@ public class ManageMetaTypeVersionComponent extends CustomComponent implements E
      */
     @Override
     public boolean isAllowedToOpen(Map<String, String> arg0) {
-        return UserView.getCurrentUser().hasRoleType(RoleType.MANAGER);
+        return LegacyUtil.hasRoleType(Authenticate.getUser(), RoleType.MANAGER);
     }
 
     /*
@@ -483,7 +484,7 @@ public class ManageMetaTypeVersionComponent extends CustomComponent implements E
     }
 
     private static String getMessage(String message, String... arguments) {
-        return BundleUtil.getFormattedStringFromResourceBundle(RESOURCE_BUNDLE, message, arguments);
+        return BundleUtil.getString(RESOURCE_BUNDLE, message, arguments);
     }
 
 }
