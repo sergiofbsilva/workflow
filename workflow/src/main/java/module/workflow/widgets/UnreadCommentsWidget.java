@@ -39,9 +39,9 @@ import module.dashBoard.widgets.WidgetController;
 import module.organization.domain.Person;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.utils.WorkflowCommentCounter;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.bennu.core.util.ClassNameBundle;
+import pt.ist.bennu.core.i18n.BundleUtil;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.ClassNameBundle;
 
 /**
  * 
@@ -57,8 +57,8 @@ public class UnreadCommentsWidget extends WidgetController {
             final Class<? extends WorkflowProcess> c1 = o1.getClass();
             final Class<? extends WorkflowProcess> c2 = o2.getClass();
 
-            final String s1 = BundleUtil.getLocalizedNamedFroClass(c1);
-            final String s2 = BundleUtil.getLocalizedNamedFroClass(c2);
+            final String s1 = pt.ist.bennu.core.util.legacy.BundleUtil.getLocalizedNamedFroClass(c1);
+            final String s2 = pt.ist.bennu.core.util.legacy.BundleUtil.getLocalizedNamedFroClass(c2);
 
             return s1.compareTo(s2);
         }
@@ -91,7 +91,7 @@ public class UnreadCommentsWidget extends WidgetController {
     public void doView(WidgetRequest request) {
         DashBoardWidget widget = request.getWidget();
         //	ExpenditureWidgetOptions options = getOrCreateOptions(widget);
-        Person loggedPerson = UserView.getCurrentUser().getPerson();
+        Person loggedPerson = Authenticate.getUser().getPerson();
         Map<Class, Integer> numberUnreadCommentsPerProcess = new HashMap<Class, Integer>();
 
         List<WorkflowProcess> processesWithUnreadComments =
@@ -140,6 +140,6 @@ public class UnreadCommentsWidget extends WidgetController {
 
     @Override
     public String getWidgetDescription() {
-        return BundleUtil.getStringFromResourceBundle("resources/WorkflowResources", "widget.description.UnreadCommentsWidget");
+        return BundleUtil.getString("resources/WorkflowResources", "widget.description.UnreadCommentsWidget");
     }
 }

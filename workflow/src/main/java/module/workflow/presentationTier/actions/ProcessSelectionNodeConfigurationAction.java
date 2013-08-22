@@ -40,12 +40,11 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.bennu.core.domain.RoleType;
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.contents.ActionNode;
-import pt.ist.bennu.core.domain.contents.Node;
-import pt.ist.bennu.core.domain.groups.Role;
+import pt.ist.bennu.core.domain.contents.legacy.ActionNode;
+import pt.ist.bennu.core.domain.contents.legacy.Node;
+import pt.ist.bennu.core.domain.groups.legacy.Role;
 import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
 import pt.ist.bennu.core.util.VariantBean;
-import pt.ist.fenixWebFramework.servlets.functionalities.CreateNodeAction;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 
@@ -58,17 +57,17 @@ import pt.ist.fenixframework.Atomic;
  */
 public class ProcessSelectionNodeConfigurationAction extends ContextBaseAction {
 
-    @CreateNodeAction(bundle = "WORKFLOW_RESOURCES", key = "add.node.workflow..nodeSelectionConfiguration",
-            groupKey = "label.module.workflow")
-    public final ActionForward createWorkflowNode(final ActionMapping mapping, final ActionForm form,
-            final HttpServletRequest request, final HttpServletResponse response) {
-        final VirtualHost virtualHost = getDomainObject(request, "virtualHostToManageId");
-        final Node node = getDomainObject(request, "parentOfNodesToManageId");
-
-        createActionNode(virtualHost, node);
-
-        return forwardToMuneConfiguration(request, virtualHost, node);
-    }
+//    @CreateNodeAction(bundle = "WORKFLOW_RESOURCES", key = "add.node.workflow..nodeSelectionConfiguration",
+//            groupKey = "label.module.workflow")
+//    public final ActionForward createWorkflowNode(final ActionMapping mapping, final ActionForm form,
+//            final HttpServletRequest request, final HttpServletResponse response) {
+//        final VirtualHost virtualHost = getDomainObject(request, "virtualHostToManageId");
+//        final Node node = getDomainObject(request, "parentOfNodesToManageId");
+//
+//        createActionNode(virtualHost, node);
+//
+//        return forwardToMuneConfiguration(request, virtualHost, node);
+//    }
 
     @Atomic
     private void createActionNode(final VirtualHost virtualHost, final Node node) {
@@ -98,7 +97,7 @@ public class ProcessSelectionNodeConfigurationAction extends ContextBaseAction {
             request.setAttribute("mappers", WorkflowSystem.getInstance().getProcessMappings());
         } else {
             request.setAttribute("mapper", mapper);
-            request.setAttribute("nodes", VirtualHost.getVirtualHostForThread().getOrderedTopLevelNodes());
+            request.setAttribute("nodes", Node.getOrderedTopNodes(VirtualHost.getVirtualHostForThread()));
         }
         request.setAttribute("newMapper", new VariantBean());
         return forward(request, "/module/workflow/manageNodeSelection.jsp");
@@ -125,8 +124,8 @@ public class ProcessSelectionNodeConfigurationAction extends ContextBaseAction {
         request.setAttribute("mapper", mapper);
         List<NodeMapping> nodeMappings = new ArrayList<>(mapper.getNodeMappings());
         int size = nodeMappings.size();
-        request.setAttribute("nodes", size == 0 ? VirtualHost.getVirtualHostForThread().getOrderedTopLevelNodes() : nodeMappings
-                .get(size - 1).getNode().getChildNodes());
+        request.setAttribute("nodes", size == 0 ? Node.getOrderedTopLevelNodes() : nodeMappings.get(size - 1).getNode()
+                .getChildNodes());
         request.setAttribute("newMapper", new VariantBean());
         return forward(request, "/module/workflow/manageNodeSelection.jsp");
     }

@@ -18,9 +18,9 @@ import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.WorkflowSystem;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.groups.PersistentGroup;
-import pt.ist.bennu.core.domain.scheduler.ReadCustomTask;
-import pt.ist.bennu.core.domain.scheduler.TransactionalThread;
+import pt.ist.bennu.core.domain.groups.legacy.PersistentGroup;
+import pt.ist.bennu.core.util.TransactionalThread;
+import pt.ist.bennu.scheduler.custom.CustomTask;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -29,7 +29,7 @@ import pt.ist.fenixframework.FenixFramework;
  *         Assign, and <b>migrate</b> the ProcessDirNode to the existing
  *         proccesses to the new infrastructure
  */
-public class AssignDirNodeRepositoryToProcessAndMigrate extends ReadCustomTask {
+public class AssignDirNodeRepositoryToProcessAndMigrate extends CustomTask {
     static int totalProcesses = 0;
     static int totalNewRepositoriesAssigned = 0;
     static int totalNewRepositoriesChanged = 0;
@@ -125,7 +125,6 @@ public class AssignDirNodeRepositoryToProcessAndMigrate extends ReadCustomTask {
 
     }
 
-    @Override
     public void doIt() {
 
         for (VirtualHost virtualHost : MyOrg.getInstance().getVirtualHosts()) {
@@ -161,14 +160,20 @@ public class AssignDirNodeRepositoryToProcessAndMigrate extends ReadCustomTask {
 
         //so, now, let's delete all the groups, if possible
 
-        out.println("Went through " + totalProcesses + " processes, created " + totalNewRepositoriesAssigned + " changed "
-                + totalNewRepositoriesChanged + " Deleted " + totalPersistentGroupsDeleted + " groups");
+        getLogger().info(
+                "Went through " + totalProcesses + " processes, created " + totalNewRepositoriesAssigned + " changed "
+                        + totalNewRepositoriesChanged + " Deleted " + totalPersistentGroupsDeleted + " groups");
 
-        out.println("Listing " + persistentGroupsImpossibleToDelete.size() + " groups that we were unable to delete");
+        getLogger().info("Listing " + persistentGroupsImpossibleToDelete.size() + " groups that we were unable to delete");
         for (PersistentGroup group : persistentGroupsImpossibleToDelete) {
-            out.println(group.getExternalId());
+            getLogger().info(group.getExternalId());
         }
 
+    }
+
+    @Override
+    public void runTask() {
+        doIt();
     }
 
 }

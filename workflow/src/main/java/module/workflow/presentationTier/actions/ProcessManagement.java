@@ -55,12 +55,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.contents.Node;
+import pt.ist.bennu.core.domain.contents.legacy.Node;
 import pt.ist.bennu.core.domain.exceptions.DomainException;
 import pt.ist.bennu.core.presentationTier.Context;
+import pt.ist.bennu.core.presentationTier.LegacyContext;
 import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.servlets.json.JsonObject;
@@ -88,7 +89,7 @@ public class ProcessManagement extends ContextBaseAction {
             new HashMap<Class<? extends WorkflowProcess>, ProcessRequestHandler<? extends WorkflowProcess>>();
 
     protected User getLoggedPerson() {
-        return UserView.getCurrentUser();
+        return Authenticate.getUser();
     }
 
     public ActionForward viewProcess(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -108,7 +109,7 @@ public class ProcessManagement extends ContextBaseAction {
             handler.handleRequest(process, request);
         }
 
-        Context context = (Context) request.getAttribute(CONTEXT);
+        LegacyContext context = (LegacyContext) request.getAttribute(CONTEXT);
         if (context.getElements().isEmpty()) {
             List<Node> forwardFor = ProcessNodeSelectionMapper.getForwardFor(process.getClass());
             context.getElements().addAll(forwardFor);
@@ -284,7 +285,7 @@ public class ProcessManagement extends ContextBaseAction {
         Set<WorkflowProcessComment> comments = new TreeSet<WorkflowProcessComment>(WorkflowProcessComment.COMPARATOR);
         comments.addAll(process.getComments());
 
-        process.markCommentsAsReadForUser(UserView.getCurrentUser());
+        process.markCommentsAsReadForUser(Authenticate.getUser());
         request.setAttribute("comments", comments);
         request.setAttribute("bean", new CommentBean(process));
 
@@ -301,7 +302,7 @@ public class ProcessManagement extends ContextBaseAction {
 
         CommentBean bean = getRenderedObject("comment");
 
-        process.createComment(UserView.getCurrentUser(), bean);
+        process.createComment(Authenticate.getUser(), bean);
 
         RenderUtils.invalidateViewState();
         if (!displayedInline) {

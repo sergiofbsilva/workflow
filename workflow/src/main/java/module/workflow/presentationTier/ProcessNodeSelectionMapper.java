@@ -33,7 +33,7 @@ import module.workflow.domain.NodeMapping;
 import module.workflow.domain.ProcessSelectionMapper;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.WorkflowSystem;
-import pt.ist.bennu.core.domain.contents.Node;
+import pt.ist.bennu.core.domain.contents.legacy.Node;
 
 /**
  * 

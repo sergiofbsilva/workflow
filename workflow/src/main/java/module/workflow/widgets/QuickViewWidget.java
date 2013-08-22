@@ -40,10 +40,10 @@ import module.workflow.presentationTier.actions.ProcessManagement;
 
 import org.apache.struts.action.ActionForward;
 
-import pt.ist.bennu.core.domain.contents.Node;
+import pt.ist.bennu.core.domain.contents.legacy.Node;
+import pt.ist.bennu.core.i18n.BundleUtil;
 import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.bennu.core.util.ClassNameBundle;
+import pt.ist.bennu.core.util.legacy.ClassNameBundle;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -123,6 +123,6 @@ public class QuickViewWidget extends WidgetController {
 
     @Override
     public String getWidgetDescription() {
-        return BundleUtil.getStringFromResourceBundle("resources/WorkflowResources", "widget.description.QuickViewWidget");
+        return BundleUtil.getString("resources/WorkflowResources", "widget.description.QuickViewWidget");
     }
 }

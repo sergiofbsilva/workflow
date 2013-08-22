@@ -26,10 +26,10 @@
  
 class module.workflow.domain.ProcessDirNode { }
 
-class module.workflow.domain.ProcessFile extends .pt.ist.fenixframework.plugins.fileSupport.domain.GenericFile { }
+class module.workflow.domain.ProcessFile extends .pt.ist.bennu.io.domain.GenericFile { }
 
 
-class module.workflow.domain.AbstractWFDocsGroup extends .pt.ist.bennu.core.domain.groups.PersistentGroup { }
+class module.workflow.domain.AbstractWFDocsGroup extends .pt.ist.bennu.core.domain.groups.legacy.PersistentGroup { }
 class module.workflow.domain.WFDocsDefaultReadGroup extends module.workflow.domain.AbstractWFDocsGroup { }
 class module.workflow.domain.WFDocsDefaultWriteGroup extends module.workflow.domain.WFDocsDefaultReadGroup { }
  

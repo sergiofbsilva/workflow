@@ -26,9 +26,9 @@ package module.workflow.domain;
 
 import java.util.Comparator;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.BundleUtil;
 
 /**
  * 
@@ -68,7 +68,7 @@ public class ProcessCounter {
 
     public int getCount() {
         int result = 0;
-        final User requestingUser = UserView.getCurrentUser();
+        final User requestingUser = Authenticate.getUser();
         for (final WorkflowProcess process : WorkflowSystem.getInstance().getProcesses()) {
             try {
                 if (shouldCountProcess(process, requestingUser)) {

@@ -31,8 +31,8 @@ import java.util.TreeSet;
 import module.dashBoard.presentationTier.WidgetRequest;
 import module.dashBoard.widgets.WidgetController;
 import module.workflow.domain.ProcessCounter;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.bennu.core.util.ClassNameBundle;
+import pt.ist.bennu.core.i18n.BundleUtil;
+import pt.ist.bennu.core.util.legacy.ClassNameBundle;
 
 @ClassNameBundle(bundle = "resources/WorkflowResources", key = "widget.title.processListWidget")
 /**
@@ -54,7 +54,7 @@ public class ProcessListWidget extends WidgetController {
 
     @Override
     public String getWidgetDescription() {
-        return BundleUtil.getStringFromResourceBundle("resources/WorkflowResources", "widget.description.processListWidget");
+        return BundleUtil.getString("resources/WorkflowResources", "widget.description.processListWidget");
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ProcessListWidget extends WidgetController {
 
     @Override
     public String getHelp() {
-        return BundleUtil.getStringFromResourceBundle("resources/WorkflowResources", "widget.help.processListWidget");
+        return BundleUtil.getString("resources/WorkflowResources", "widget.help.processListWidget");
     }
 
     public static void register(final ProcessCounter processCounter) {

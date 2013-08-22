@@ -25,7 +25,7 @@
 package module.workflow.domain;
 
 import module.workflow.domain.WorkflowProcess.WorkflowProcessIndex;
-import pt.ist.fenixframework.plugins.luceneIndexing.domain.IndexDocument;
+import pt.ist.bennu.search.IndexDocument;
 
 /**
  * 

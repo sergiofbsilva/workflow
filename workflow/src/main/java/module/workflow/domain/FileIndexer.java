@@ -27,7 +27,7 @@ package module.workflow.domain;
 import module.fileSupport.metadata.parsing.FileMetadata;
 import module.fileSupport.metadata.parsing.MetadataParserChain;
 import module.workflow.domain.WorkflowProcess.WorkflowProcessIndex;
-import pt.ist.fenixframework.plugins.luceneIndexing.domain.IndexDocument;
+import pt.ist.bennu.search.IndexDocument;
 
 /*
  * This is only here because we have that

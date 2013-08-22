@@ -24,21 +24,7 @@
  */
 package module.workflow.presentationTier.actions;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
-import pt.ist.bennu.core.domain.RoleType;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.contents.ActionNode;
-import pt.ist.bennu.core.domain.contents.Node;
-import pt.ist.bennu.core.domain.groups.AnyoneGroup;
-import pt.ist.bennu.core.domain.groups.Role;
 import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
-import pt.ist.fenixWebFramework.servlets.functionalities.CreateNodeAction;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/queuesInterfaceCreationAction")
@@ -50,18 +36,18 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 public class InterfaceCreation extends ContextBaseAction {
 
-    @CreateNodeAction(bundle = "WORKFLOW_RESOURCES", key = "add.node.workflow.queueInterface", groupKey = "label.module.workflow")
-    public final ActionForward createWorkflowNode(final ActionMapping mapping, final ActionForm form,
-            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-        final VirtualHost virtualHost = getDomainObject(request, "virtualHostToManageId");
-        final Node node = getDomainObject(request, "parentOfNodesToManageId");
-
-        ActionNode.createActionNode(virtualHost, node, "/workflowQueueManagement", "manageQueues", "resources.WorkflowResources",
-                "link.topBar.QueueManagement", AnyoneGroup.getInstance());
-        ActionNode.createActionNode(virtualHost, node, "/workflowConfiguration", "viewConfiguration",
-                "resources.WorkflowResources", "link.topBar.configuration", Role.getRole(RoleType.MANAGER));
-
-        return forwardToMuneConfiguration(request, virtualHost, node);
-    }
+//    @CreateNodeAction(bundle = "WORKFLOW_RESOURCES", key = "add.node.workflow.queueInterface", groupKey = "label.module.workflow")
+//    public final ActionForward createWorkflowNode(final ActionMapping mapping, final ActionForm form,
+//            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+//        final VirtualHost virtualHost = getDomainObject(request, "virtualHostToManageId");
+//        final Node node = getDomainObject(request, "parentOfNodesToManageId");
+//
+//        ActionNode.createActionNode(virtualHost, node, "/workflowQueueManagement", "manageQueues", "resources.WorkflowResources",
+//                "link.topBar.QueueManagement", AnyoneGroup.getInstance());
+//        ActionNode.createActionNode(virtualHost, node, "/workflowConfiguration", "viewConfiguration",
+//                "resources.WorkflowResources", "link.topBar.configuration", Role.getRole(RoleType.MANAGER));
+//
+//        return forwardToMuneConfiguration(request, virtualHost, node);
+//    }
 
 }

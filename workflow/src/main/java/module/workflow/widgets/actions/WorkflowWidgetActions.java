@@ -37,8 +37,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
@@ -66,7 +66,7 @@ public class WorkflowWidgetActions extends ContextBaseAction {
         request.setAttribute("processClass", processClass);
 
         //get all of the unread comments
-        Person loggedPerson = UserView.getCurrentUser().getPerson();
+        Person loggedPerson = Authenticate.getUser().getPerson();
         List<WorkflowProcess> processesWithUnreadComments =
                 UnreadCommentsWidget.getProcessesWithUnreadComments(null, loggedPerson, processClass);
         request.setAttribute("processesWithUnreadComments", processesWithUnreadComments);
@@ -91,7 +91,7 @@ public class WorkflowWidgetActions extends ContextBaseAction {
         }
 
         //mark the comments as read
-        process.markCommentsAsReadForUser(UserView.getCurrentUser());
+        process.markCommentsAsReadForUser(Authenticate.getUser());
         return viewListUnreadComments(mapping, form, request, response);
     }
 }

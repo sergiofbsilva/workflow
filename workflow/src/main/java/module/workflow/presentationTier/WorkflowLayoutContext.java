@@ -25,7 +25,7 @@
 package module.workflow.presentationTier;
 
 import module.workflow.domain.WorkflowProcess;
-import pt.ist.bennu.core.presentationTier.LayoutContext;
+import pt.ist.bennu.core.presentationTier.LegacyContext;
 
 /**
  * 
@@ -33,7 +33,7 @@ import pt.ist.bennu.core.presentationTier.LayoutContext;
  * @author Paulo Abrantes
  * 
  */
-public class WorkflowLayoutContext extends LayoutContext {
+public class WorkflowLayoutContext extends LegacyContext {
 
     public final static String DEFAULT_BODY = "body.jsp";
     public final static String DEFAULT_SHORT_BODY = "shortBody.jsp";
@@ -43,12 +43,12 @@ public class WorkflowLayoutContext extends LayoutContext {
     protected String workflowShortBody;
     protected String workflowHead;
 
-    public WorkflowLayoutContext() {
-        super();
-    }
-
     public WorkflowLayoutContext(final String path) {
         super(path);
+    }
+
+    public WorkflowLayoutContext() {
+        super();
     }
 
     public String getWorkflowShortBody() {
@@ -84,4 +84,5 @@ public class WorkflowLayoutContext extends LayoutContext {
 
         return context;
     }
+
 }

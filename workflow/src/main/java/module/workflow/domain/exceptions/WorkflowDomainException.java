@@ -3,8 +3,6 @@
  */
 package module.workflow.domain.exceptions;
 
-import java.util.ResourceBundle;
-
 import pt.ist.bennu.core.domain.exceptions.DomainException;
 
 /**
@@ -16,14 +14,14 @@ import pt.ist.bennu.core.domain.exceptions.DomainException;
 public class WorkflowDomainException extends DomainException {
     private static final long serialVersionUID = 1L;
 
-    private static final ResourceBundle bundle = DomainException.getResourceFor("resources/WorkflowResources");
+    private static final String bundle = "resources/WorkflowResources";
 
     /**
      * @param key
      * @param args
      */
     public WorkflowDomainException(String key, String... args) {
-        super(key, bundle, args);
+        super(bundle, key, args);
     }
 
     /**
@@ -32,7 +30,7 @@ public class WorkflowDomainException extends DomainException {
      * @param args
      */
     public WorkflowDomainException(String key, Throwable cause, String... args) {
-        super(key, cause, bundle, args);
+        super(cause, bundle, key, args);
     }
 
 }

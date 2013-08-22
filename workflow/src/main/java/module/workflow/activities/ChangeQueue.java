@@ -28,9 +28,8 @@ import java.util.Collection;
 
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.WorkflowQueue;
+import module.workflow.domain.exceptions.WorkflowDomainException;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
-import pt.ist.bennu.core.util.BundleUtil;
 
 /**
  * 
@@ -53,8 +52,7 @@ public class ChangeQueue<T extends WorkflowProcess> extends WorkflowActivity<T, 
 
         for (WorkflowQueue queueToRemove : queuesToRemove) {
             if (!queueToRemove.isCurrentUserAbleToAccessQueue()) {
-                throw new DomainException(BundleUtil.getFormattedStringFromResourceBundle("resources/MetaWorkflowResources",
-                        "error.user.cannotRemove.from.queue", queueToRemove.getName()));
+                throw new WorkflowDomainException("error.user.cannotRemove.from.queue", queueToRemove.getName());
             }
             process.removeCurrentQueues(queueToRemove);
         }
@@ -64,8 +62,7 @@ public class ChangeQueue<T extends WorkflowProcess> extends WorkflowActivity<T, 
         }
 
         if (process.getCurrentQueuesSet().isEmpty()) {
-            throw new DomainException(BundleUtil.getFormattedStringFromResourceBundle("resources/MetaWorkflowResources",
-                    "error.process.mustHave.atLeast.one.queue"));
+            throw new WorkflowDomainException("error.process.mustHave.atLeast.one.queue");
         }
     }
 

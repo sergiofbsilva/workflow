@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.contents.Node;
+import pt.ist.bennu.core.domain.contents.legacy.Node;
 import pt.ist.fenixframework.Atomic;
 
 /**

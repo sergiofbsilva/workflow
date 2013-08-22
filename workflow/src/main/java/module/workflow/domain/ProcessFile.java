@@ -24,8 +24,6 @@
  */
 package module.workflow.domain;
 
-import javax.annotation.Nonnull;
-
 import jvstm.cps.ConsistencyPredicate;
 import module.fileManagement.domain.DirNode;
 import module.fileManagement.domain.FileNode;
@@ -35,8 +33,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.bennu.core.domain.groups.UnionGroup;
-import pt.ist.bennu.core.util.ClassNameBundle;
+import pt.ist.bennu.core.domain.groups.legacy.UnionGroup;
+import pt.ist.bennu.core.util.legacy.ClassNameBundle;
 
 /**
  * 
@@ -148,8 +146,7 @@ public class ProcessFile extends ProcessFile_Base {
     public static class GenericPDMetaDataResolver extends ProcessDocumentMetaDataResolver<ProcessFile> {
 
         @Override
-        public @Nonnull
-        Class<? extends AbstractWFDocsGroup> getWriteGroupClass() {
+        public Class<? extends AbstractWFDocsGroup> getWriteGroupClass() {
             return WFDocsDefaultWriteGroup.class;
         }
 

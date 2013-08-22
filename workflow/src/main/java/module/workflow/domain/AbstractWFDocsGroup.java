@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.ist.bennu.core.domain.MyOrg;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
 
 public abstract class AbstractWFDocsGroup extends AbstractWFDocsGroup_Base {
@@ -28,7 +28,7 @@ public abstract class AbstractWFDocsGroup extends AbstractWFDocsGroup_Base {
     public Set<User> getMembers() {
         //TODO shall we do this?!?!
         Set<User> users = new HashSet<User>();
-        for (User user : MyOrg.getInstance().getUserSet()) {
+        for (User user : Bennu.getInstance().getUsersSet()) {
             if (isMember(user)) {
                 users.add(user);
             }

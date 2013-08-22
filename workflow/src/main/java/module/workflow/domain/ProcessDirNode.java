@@ -5,8 +5,8 @@ import module.fileManagement.domain.ContextPath;
 import module.fileManagement.domain.DirNode;
 import module.fileManagement.domain.FileNode;
 import module.workflow.domain.exceptions.DuplicateProcessFileNameException;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
-import pt.ist.bennu.core.domain.groups.PersistentGroup;
+import module.workflow.domain.exceptions.WorkflowDomainException;
+import pt.ist.bennu.core.domain.groups.legacy.PersistentGroup;
 
 public class ProcessDirNode extends ProcessDirNode_Base {
 
@@ -85,7 +85,7 @@ public class ProcessDirNode extends ProcessDirNode_Base {
     public ProcessDirNode(WorkflowProcess process) {
         super();
         if (process.getDocumentsRepository() != null) {
-            throw new DomainException("error.this.process.already.has.a.repository");
+            throw new WorkflowDomainException("error.this.process.already.has.a.repository");
         }
         setDirNode(new DirNode());
         getDirNode().setReadGroup(WFDocsDefaultReadGroup.getOrCreateInstance(process));

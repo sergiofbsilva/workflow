@@ -37,8 +37,8 @@ import module.workflow.util.WorkflowQueueBean;
 
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * 
@@ -70,7 +70,7 @@ public abstract class WorkflowQueue extends WorkflowQueue_Base {
     }
 
     public boolean isCurrentUserAbleToAccessQueue() {
-        return isUserAbleToAccessQueue(UserView.getCurrentUser());
+        return isUserAbleToAccessQueue(Authenticate.getUser());
     }
 
     public abstract boolean isUserAbleToAccessQueue(User user);

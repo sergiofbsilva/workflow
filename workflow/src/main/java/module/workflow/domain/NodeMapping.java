@@ -26,7 +26,7 @@ package module.workflow.domain;
 
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.contents.Node;
+import pt.ist.bennu.core.domain.contents.legacy.Node;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 

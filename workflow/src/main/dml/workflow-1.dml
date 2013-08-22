@@ -100,7 +100,7 @@ relation NodeMappingNode {
 	NodeMapping playsRole NodeMapping {
 		multiplicity *;
 	}
-	.pt.ist.bennu.core.domain.contents.Node playsRole node;
+	.pt.ist.bennu.core.domain.contents.legacy.Node playsRole node;
 }
 
 relation WorkflowflowSystemWorkflowProcess {

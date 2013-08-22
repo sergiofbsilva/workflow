@@ -32,8 +32,8 @@ import org.joda.time.DateTime;
 
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.fenixframework.plugins.luceneIndexing.domain.interfaces.Indexable;
-import pt.ist.fenixframework.plugins.luceneIndexing.domain.interfaces.Searchable;
+import pt.ist.bennu.search.Indexable;
+import pt.ist.bennu.search.Searchable;
 
 /**
  * 

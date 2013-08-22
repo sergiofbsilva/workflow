@@ -25,7 +25,7 @@
 package module.workflow.domain;
 
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
 
 /**
  * 
@@ -41,8 +41,8 @@ public class FileRemoveLog extends FileRemoveLog_Base {
 
     @Override
     public String getDescription() {
-        return BundleUtil.getFormattedStringFromResourceBundle("resources/WorkflowResources", "label.description.FileRemoveLog",
-                getDescriptionArguments().toArray(new String[] {}));
+        return BundleUtil.getString("resources/WorkflowResources", "label.description.FileRemoveLog", getDescriptionArguments()
+                .toArray(new String[] {}));
     }
 
 }

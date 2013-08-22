@@ -37,17 +37,17 @@ import module.workflow.domain.WorkflowProcess;
 
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.domain.scheduler.ReadCustomTask;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.fenixframework.plugins.fileSupport.domain.FileSupport;
-import pt.ist.fenixframework.plugins.fileSupport.domain.GenericFile;
+import pt.ist.bennu.core.util.legacy.BundleUtil;
+import pt.ist.bennu.io.domain.FileSupport;
+import pt.ist.bennu.io.domain.GenericFile;
+import pt.ist.bennu.scheduler.custom.CustomTask;
 
 /**
  * 
  * @author João Antunes
  * 
  */
-public class ScourActivityLogsToDeduceProcessFileCreationDateMigration extends ReadCustomTask {
+public class ScourActivityLogsToDeduceProcessFileCreationDateMigration extends CustomTask {
 
     public class ProcessFileAndCreationDateBinder {
         public ProcessFileAndCreationDateBinder(DateTime creationDate, ProcessFile processFile) {
@@ -55,7 +55,7 @@ public class ScourActivityLogsToDeduceProcessFileCreationDateMigration extends R
     }
 
     @Override
-    public void doIt() {
+    public void runTask() {
 
         HashMap<WorkflowProcess, Map<ProcessFile, FileUploadLog>> workflowProcessFiles =
                 new HashMap<WorkflowProcess, Map<ProcessFile, FileUploadLog>>();
@@ -65,7 +65,7 @@ public class ScourActivityLogsToDeduceProcessFileCreationDateMigration extends R
         int countNrTimestampsIdentified = 0;
         int countNrTimestampsNotIdentified = 0;
         //let's do this by getting all of the processFiles 
-        for (GenericFile genericFile : FileSupport.getInstance().getGenericFiles()) {
+        for (GenericFile genericFile : FileSupport.getInstance().getGenericFilesSet()) {
             if (genericFile instanceof ProcessFile) {
                 countNrProcessFilesFound++;
                 ProcessFile processFile = (ProcessFile) genericFile;
@@ -131,23 +131,23 @@ public class ScourActivityLogsToDeduceProcessFileCreationDateMigration extends R
 
         //let's print out the results before applying them
         int nrUnidentifiableProcessFiles = (workflowProcessFiles.get(null) != null) ? workflowProcessFiles.get(null).size() : 0;
-        out.println("Results: (unidentifiable is refers only to the ProcessFiles, the GenericFiles are implicitly unidentifiable)");
-        out.println("-- nr generic \t nr process \t nr.Identified \t nr.Unidentified \t nr.Unidentifiable \t nrFilesMoreThanOneCreationDate--)");
-        out.println(countJustGenericFilesFound + "\t\t" + countNrProcessFilesFound + "\t\t" + countNrTimestampsIdentified
-                + "\t\t" + countNrTimestampsNotIdentified + "\t\t" + nrUnidentifiableProcessFiles + "\t\t"
+        taskLog("Results: (unidentifiable is refers only to the ProcessFiles, the GenericFiles are implicitly unidentifiable)");
+        taskLog("-- nr generic \t nr process \t nr.Identified \t nr.Unidentified \t nr.Unidentifiable \t nrFilesMoreThanOneCreationDate--)");
+        taskLog(countJustGenericFilesFound + "\t\t" + countNrProcessFilesFound + "\t\t" + countNrTimestampsIdentified + "\t\t"
+                + countNrTimestampsNotIdentified + "\t\t" + nrUnidentifiableProcessFiles + "\t\t"
                 + twoTimestampsFoundProcessFileList.size());
 
         //let's print out the more than one creation date occurrances:
-        out.println("\nPrinting the log entries for each duplicate file found:");
+        taskLog("\nPrinting the log entries for each duplicate file found:");
         for (ProcessFile processFile : twoTimestampsFoundProcessFileList.keySet()) {
-            out.println("--");
+            taskLog("--");
             String idProcesso = (processFile.getProcess() == null) ? "-" : processFile.getProcess().getDescription();
-            out.println("ProcessFile: " + processFile.getFilename() + "(" + processFile.getDisplayName() + ")" + "processo: "
+            taskLog("ProcessFile: " + processFile.getFilename() + "(" + processFile.getDisplayName() + ")" + "processo: "
                     + idProcesso);
             for (FileUploadLog fileUploadLog : twoTimestampsFoundProcessFileList.get(processFile)) {
-                out.println(fileUploadLog.getWhenOperationWasRan() + " : " + fileUploadLog.getDescription());
+                taskLog(fileUploadLog.getWhenOperationWasRan() + " : " + fileUploadLog.getDescription());
             }
-            out.println("--");
+            taskLog("--");
         }
     }
 }

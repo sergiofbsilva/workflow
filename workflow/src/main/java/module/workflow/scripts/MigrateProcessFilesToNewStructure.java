@@ -21,12 +21,12 @@ import module.workflow.domain.exceptions.DuplicateProcessFileNameException;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.bennu.core.applicationTier.Authenticate;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.scheduler.ReadCustomTask;
-import pt.ist.bennu.core.domain.scheduler.TransactionalThread;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.TransactionalThread;
+import pt.ist.bennu.scheduler.custom.CustomTask;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.core.TransactionError;
 import pt.ist.fenixframework.core.WriteOnReadError;
@@ -44,7 +44,7 @@ import com.vaadin.data.Buffered;
  *         associated with a Document and with fileNode, etc)
  * 
  */
-public class MigrateProcessFilesToNewStructure extends ReadCustomTask {
+public class MigrateProcessFilesToNewStructure extends CustomTask {
     static int totalProcesses = 0;
     static int totalProcessesUnableToBeMigrated = 0;
     static int totalFilesMigrated = 0;
@@ -136,8 +136,7 @@ public class MigrateProcessFilesToNewStructure extends ReadCustomTask {
                 //		processFilesWithoutCreationDate.add(file);
                 return false;
             }
-            final pt.ist.bennu.core.applicationTier.Authenticate.UserView userView = Authenticate.authenticate(userWhoUploaded);
-            pt.ist.fenixWebFramework.security.UserView.setUser(userView);
+            Authenticate.setUser(userWhoUploaded);
             try {
                 process.migrateFileToNewStructure(file);
                 totalFilesMigrated++;
@@ -158,7 +157,7 @@ public class MigrateProcessFilesToNewStructure extends ReadCustomTask {
                 foundException = true;
                 processFilesUnableToBeMigrated.put(file, ex);
             } finally {
-                pt.ist.fenixWebFramework.security.UserView.setUser(null);
+                Authenticate.setUser((User) null);
             }
 
             return foundException;
@@ -219,7 +218,7 @@ public class MigrateProcessFilesToNewStructure extends ReadCustomTask {
     }
 
     @Override
-    public void doIt() {
+    public void runTask() {
         // TODO Auto-generated method stub
         for (VirtualHost virtualHost : MyOrg.getInstance().getVirtualHosts()) {
             VirtualHost.setVirtualHostForThread(virtualHost);
@@ -254,18 +253,18 @@ public class MigrateProcessFilesToNewStructure extends ReadCustomTask {
 
         //so, now, let's delete all the groups, if possible
 
-        out.println("Went through " + totalProcesses + " processes. Could not migrate (due to lack of repository): "
+        taskLog("Went through " + totalProcesses + " processes. Could not migrate (due to lack of repository): "
                 + totalProcessesUnableToBeMigrated);
-        out.println("Went through " + totalProcessFilesPassedThrough + " files. Had already migrated "
-                + totalFilesAlreadyMigrated + " total files migrated " + totalFilesMigrated
-                + " total files unable to migrate  due to exception" + processFilesUnableToBeMigrated.size());
+        taskLog("Went through " + totalProcessFilesPassedThrough + " files. Had already migrated " + totalFilesAlreadyMigrated
+                + " total files migrated " + totalFilesMigrated + " total files unable to migrate  due to exception"
+                + processFilesUnableToBeMigrated.size());
 
-        out.println("Listing the exceptions that caused the processFiles not to be migrated ");
+        taskLog("Listing the exceptions that caused the processFiles not to be migrated ");
         for (Throwable ex : processFilesUnableToBeMigrated.values()) {
-            out.println(ex.toString());
+            taskLog(ex.toString());
         }
 
-        out.println("Number of files for which we could not find the user: " + processFilesWithoutUser.size()
+        taskLog("Number of files for which we could not find the user: " + processFilesWithoutUser.size()
                 + " listing the classes");
         Multiset<Class<? extends ProcessFile>> processFilesWithoutUserClasses = HashMultiset.create();
         for (ProcessFile processFileWithoutUser : processFilesWithoutUser) {
@@ -274,10 +273,10 @@ public class MigrateProcessFilesToNewStructure extends ReadCustomTask {
 
         for (Entry<Class<? extends ProcessFile>> fileClassEntry : processFilesWithoutUserClasses.entrySet()) {
             Class<? extends ProcessFile> clazz = fileClassEntry.getElement();
-            out.println("Class " + clazz.getSimpleName() + " nr: " + processFilesWithoutUserClasses.count(clazz));
+            taskLog("Class " + clazz.getSimpleName() + " nr: " + processFilesWithoutUserClasses.count(clazz));
         }
 
-        //	out.println("Number of files for without creation date: " + processFilesWithoutCreationDate.size()
+        //	taskLog("Number of files for without creation date: " + processFilesWithoutCreationDate.size()
         //		+ " listing the classes");
         //	Multiset<Class<? extends ProcessFile>> processFilesWithoutCreationDateClasses = HashMultiset.create();
         //	for (ProcessFile processFileWithoutCreationDate : processFilesWithoutCreationDate) {
@@ -286,13 +285,13 @@ public class MigrateProcessFilesToNewStructure extends ReadCustomTask {
 
         for (Entry<Class<? extends ProcessFile>> fileClassEntry : processFilesWithoutUserClasses.entrySet()) {
             Class<? extends ProcessFile> clazz = fileClassEntry.getElement();
-            out.println("Class " + clazz.getSimpleName() + " nr: " + processFilesWithoutUserClasses.count(clazz));
+            taskLog("Class " + clazz.getSimpleName() + " nr: " + processFilesWithoutUserClasses.count(clazz));
         }
 
-        out.println("Got " + processFilesWithUserButNoPermission.size()
+        taskLog("Got " + processFilesWithUserButNoPermission.size()
                 + " process files for whom we found a user, but they had no permission");
 
-        out.println("Found " + foundUsers + " users");
+        taskLog("Found " + foundUsers + " users");
     }
 
 }

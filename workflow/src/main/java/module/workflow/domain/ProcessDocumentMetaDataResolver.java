@@ -6,13 +6,11 @@ package module.workflow.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import module.fileManagement.domain.Document;
 import module.fileManagement.domain.metadata.Metadata;
 import module.fileManagement.domain.metadata.MetadataTemplate;
-import pt.ist.bennu.core.domain.groups.PersistentGroup;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.domain.groups.legacy.PersistentGroup;
+import pt.ist.bennu.core.util.legacy.BundleUtil;
 
 /**
  * @author João Antunes (joao.antunes@tagus.ist.utl.pt) - 4 de Mai de 2012
@@ -55,8 +53,7 @@ public abstract class ProcessDocumentMetaDataResolver<P extends ProcessFile> {
      * @return The {@link PersistentGroup#getClass()} to be used on the Document
      *         to control the read capabilities {@link Document#getReadGroup()} the default is {@link WFDocsDefaultReadGroup}
      */
-    public @Nonnull
-    Class<? extends AbstractWFDocsGroup> getReadGroupClass() {
+    public Class<? extends AbstractWFDocsGroup> getReadGroupClass() {
         return WFDocsDefaultReadGroup.class;
     }
 
@@ -65,8 +62,7 @@ public abstract class ProcessDocumentMetaDataResolver<P extends ProcessFile> {
      * @return The {@link PersistentGroup#getClass()} to be used on the Document
      *         to control the write capabilities {@link Document#getWriteGroup()}
      */
-    public abstract @Nonnull
-    Class<? extends AbstractWFDocsGroup> getWriteGroupClass();
+    public abstract Class<? extends AbstractWFDocsGroup> getWriteGroupClass();
 
     /**
      * 

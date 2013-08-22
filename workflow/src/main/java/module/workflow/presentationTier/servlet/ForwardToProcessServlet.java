@@ -38,10 +38,10 @@ import module.workflow.presentationTier.actions.ProcessManagement;
 
 import org.apache.struts.action.ActionForward;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.fenixWebFramework.Config.CasConfig;
-import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.bennu.core.util.ConfigurationManager.CasConfig;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
@@ -79,12 +79,11 @@ public class ForwardToProcessServlet extends HttpServlet {
         } else {
             workflowProcess = search.iterator().next();
         }
-        final User user = UserView.getCurrentUser();
+        final User user = Authenticate.getUser();
         if (user == null) {
-            final String serverName = request.getServerName();
-            final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
+            final CasConfig casConfig = ConfigurationManager.getCasConfig();
             if (casConfig != null && casConfig.isCasEnabled()) {
-                final String casLoginUrl = casConfig.getCasLoginUrl();
+                final String casLoginUrl = casConfig.getCasLoginUrl(request);
                 final StringBuilder url = new StringBuilder();
                 url.append(casLoginUrl);
                 url.append(getDownloadUrlForDomainObject(request, workflowProcess));

@@ -29,9 +29,9 @@ import java.util.ResourceBundle;
 
 import module.workflow.domain.ActivityLog;
 import module.workflow.domain.WorkflowProcess;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.i18n.BundleUtil;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -57,7 +57,7 @@ public abstract class WorkflowActivity<P extends WorkflowProcess, AI extends Act
      * @return Current Logged User
      */
     protected User getLoggedPerson() {
-        return UserView.getCurrentUser();
+        return Authenticate.getUser();
     }
 
     /**
@@ -172,8 +172,8 @@ public abstract class WorkflowActivity<P extends WorkflowProcess, AI extends Act
     public static class NotActiveActivityException extends ActivityException {
 
         public NotActiveActivityException(final String activityName) {
-            super(BundleUtil.getFormattedStringFromResourceBundle("resources.WorkflowResources",
-                    "activities.messages.exception.notActive", activityName), activityName);
+            super(BundleUtil.getString("resources.WorkflowResources", "activities.messages.exception.notActive", activityName),
+                    activityName);
         }
 
     }
@@ -270,7 +270,7 @@ public abstract class WorkflowActivity<P extends WorkflowProcess, AI extends Act
      */
     public String getLocalizedName() {
         try {
-            return BundleUtil.getStringFromResourceBundle(getUsedBundle(), "activity." + getClass().getSimpleName());
+            return BundleUtil.getString(getUsedBundle(), "activity." + getClass().getSimpleName());
         } catch (java.util.MissingResourceException e) {
             e.printStackTrace();
             return getClass().getSimpleName();
@@ -333,7 +333,7 @@ public abstract class WorkflowActivity<P extends WorkflowProcess, AI extends Act
      * @return Localized confirmation message
      */
     public String getLocalizedConfirmationMessage() {
-        return BundleUtil.getStringFromResourceBundle(getUsedBundle(), "activity.confirmation." + getClass().getName());
+        return BundleUtil.getString(getUsedBundle(), "activity.confirmation." + getClass().getName());
     }
 
     /**
@@ -388,6 +388,6 @@ public abstract class WorkflowActivity<P extends WorkflowProcess, AI extends Act
      * @return Localized help message
      */
     public String getHelpMessage() {
-        return BundleUtil.getStringFromResourceBundle(getUsedBundle(), "label." + getClass().getName() + ".help");
+        return BundleUtil.getString(getUsedBundle(), "label." + getClass().getName() + ".help");
     }
 }
