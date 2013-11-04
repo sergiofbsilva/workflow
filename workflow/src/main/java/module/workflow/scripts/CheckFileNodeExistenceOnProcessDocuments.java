@@ -28,7 +28,7 @@
 //import module.workflow.domain.WFDocumentsWritePG;
 //import module.workflow.domain.WorkflowProcess;
 //import module.workflow.domain.WorkflowSystem;
-//import pt.ist.bennu.core.domain.MyOrg;
+//import pt.ist.bennu.core.domain.Bennu;
 //import pt.ist.bennu.core.domain.VirtualHost;
 //import pt.ist.bennu.core.domain.groups.PersistentGroup;
 //import pt.ist.bennu.core.domain.scheduler.ReadCustomTask;

@@ -24,10 +24,10 @@
  */
 package module.workflow.domain;
 
+import pt.ist.bennu.search.IndexDocument;
 import module.fileSupport.metadata.parsing.FileMetadata;
 import module.fileSupport.metadata.parsing.MetadataParserChain;
 import module.workflow.domain.WorkflowProcess.WorkflowProcessIndex;
-import pt.ist.bennu.search.IndexDocument;
 
 /*
  * This is only here because we have that
@@ -47,7 +47,7 @@ public class FileIndexer {
 
         if (parsedFiles.hasContent()) {
             for (String key : parsedFiles.keySet()) {
-                document.indexField(WorkflowProcessIndex.FILE, parsedFiles.getObject(key));
+                document.indexText(WorkflowProcessIndex.FILE, parsedFiles.getObject(key));
             }
         }
     }

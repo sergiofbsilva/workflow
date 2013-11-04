@@ -24,18 +24,20 @@
  */
 package module.workflow.domain;
 
+import pt.ist.bennu.core.domain.MyOrg;
+import pt.ist.bennu.core.domain.VirtualHost;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
+
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
+
 import javax.servlet.http.HttpServletRequest;
 
 import module.dashBoard.WidgetRegister;
 import module.workflow.widgets.ProcessListWidget;
 import module.workflow.widgets.QuickViewWidget;
 import module.workflow.widgets.UnreadCommentsWidget;
-import pt.ist.bennu.core.domain.MyOrg;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * 

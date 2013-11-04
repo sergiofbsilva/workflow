@@ -5,7 +5,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 
-<logic:present role="pt.ist.bennu.core.domain.RoleType.MANAGER">
+<logic:present role="#managers">
 	<bean:define id="url">/metaWorkflowOrganizationModel.do?method=prepareCreateQueuet&amp;organizationalModelOid=<bean:write name="organizationalModel" property="externalId"/>&amp;viewName=queueView</bean:define>
 	<html:link action="<%= url %>" paramId="partyOid" paramName="party" paramProperty="externalId">
 		<bean:message key="label.unit.queue.create" bundle="META_WORKFLOW_RESOURCES"/>

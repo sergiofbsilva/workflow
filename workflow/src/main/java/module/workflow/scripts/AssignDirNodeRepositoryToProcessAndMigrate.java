@@ -3,6 +3,14 @@
  */
 package module.workflow.scripts;
 
+import pt.ist.bennu.core.domain.MyOrg;
+import pt.ist.bennu.core.domain.VirtualHost;
+import pt.ist.bennu.core.domain.groups.legacy.PersistentGroup;
+import pt.ist.bennu.core.util.TransactionalThread;
+import pt.ist.bennu.scheduler.custom.CustomTask;
+
+import pt.ist.fenixframework.FenixFramework;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -16,12 +24,6 @@ import module.workflow.domain.WFDocsDefaultReadGroup;
 import module.workflow.domain.WFDocsDefaultWriteGroup;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.WorkflowSystem;
-import pt.ist.bennu.core.domain.MyOrg;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.groups.legacy.PersistentGroup;
-import pt.ist.bennu.core.util.TransactionalThread;
-import pt.ist.bennu.scheduler.custom.CustomTask;
-import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Antunes (joao.antunes@tagus.ist.utl.pt) - 15 de Mai de 2012
@@ -127,7 +129,7 @@ public class AssignDirNodeRepositoryToProcessAndMigrate extends CustomTask {
 
     public void doIt() {
 
-        for (VirtualHost virtualHost : MyOrg.getInstance().getVirtualHosts()) {
+        for (VirtualHost virtualHost : MyOrg.getInstance().getVirtualHostsSet()) {
             VirtualHost.setVirtualHostForThread(virtualHost);
             Set<WorkflowProcess> processes =
                     WorkflowSystem.getInstance() == null ? null : WorkflowSystem.getInstance().getProcesses();

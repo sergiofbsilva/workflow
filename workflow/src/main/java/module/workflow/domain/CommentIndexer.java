@@ -24,8 +24,8 @@
  */
 package module.workflow.domain;
 
-import module.workflow.domain.WorkflowProcess.WorkflowProcessIndex;
 import pt.ist.bennu.search.IndexDocument;
+import module.workflow.domain.WorkflowProcess.WorkflowProcessIndex;
 
 /**
  * 
@@ -45,8 +45,8 @@ public class CommentIndexer {
 
         }
 
-        document.indexField(WorkflowProcessIndex.COMMENTS, commentsBuffer.toString());
-        document.indexField(WorkflowProcessIndex.COMMENTORS, commentorsBuffer.toString());
+        document.indexText(WorkflowProcessIndex.COMMENTS, commentsBuffer.toString());
+        document.indexText(WorkflowProcessIndex.COMMENTORS, commentorsBuffer.toString());
 
     }
 

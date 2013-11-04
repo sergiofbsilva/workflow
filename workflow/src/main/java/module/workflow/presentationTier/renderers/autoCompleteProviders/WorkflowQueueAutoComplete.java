@@ -24,6 +24,9 @@
  */
 package module.workflow.presentationTier.renderers.autoCompleteProviders;
 
+import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -31,18 +34,16 @@ import java.util.Set;
 
 import module.workflow.domain.WorkflowQueue;
 import module.workflow.domain.WorkflowSystem;
-import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 /**
  * 
  * @author Paulo Abrantes
  * 
  */
-public class WorkflowQueueAutoComplete implements AutoCompleteProvider {
+public class WorkflowQueueAutoComplete implements AutoCompleteProvider<WorkflowQueue> {
 
     @Override
-    public Collection getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+    public Collection<WorkflowQueue> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         Set<WorkflowQueue> queues = new HashSet<WorkflowQueue>();
 
         String[] values = StringNormalizer.normalize(value).toLowerCase().split(" ");

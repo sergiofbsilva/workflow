@@ -24,6 +24,14 @@
  */
 package module.metaWorkflow.presentationTier.actions;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.VariantBean;
+import pt.ist.bennu.search.Search;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,14 +55,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
-import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.VariantBean;
-import pt.ist.bennu.search.DomainIndexer;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/metaWorkflow")
 /**
@@ -153,7 +153,7 @@ public class MetaWorkflowAction extends ContextBaseAction {
 
         String searchQuery = getRenderedObject("searchQuery");
         if (searchQuery != null) {
-            List<WorkflowMetaProcess> searchResults = DomainIndexer.getInstance().search(WorkflowMetaProcess.class, searchQuery);
+            List<WorkflowMetaProcess> searchResults = new Search().must(searchQuery).search(WorkflowMetaProcess.class);
             request.setAttribute("searchResult", searchResults);
         }
         request.setAttribute("searchBean", new VariantBean());

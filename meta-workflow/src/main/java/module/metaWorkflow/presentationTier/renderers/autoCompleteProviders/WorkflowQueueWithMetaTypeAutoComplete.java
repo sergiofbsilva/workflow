@@ -24,6 +24,12 @@
  */
 package module.metaWorkflow.presentationTier.renderers.autoCompleteProviders;
 
+import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+
+import pt.ist.fenixframework.FenixFramework;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -31,19 +37,16 @@ import java.util.Set;
 
 import module.metaWorkflow.domain.WorkflowMetaType;
 import module.workflow.domain.WorkflowQueue;
-import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
-import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 /**
  * 
  * @author Paulo Abrantes
  * 
  */
-public class WorkflowQueueWithMetaTypeAutoComplete implements AutoCompleteProvider {
+public class WorkflowQueueWithMetaTypeAutoComplete implements AutoCompleteProvider<WorkflowQueue> {
 
     @Override
-    public Collection getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+    public Collection<WorkflowQueue> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         Set<WorkflowQueue> queues = new HashSet<WorkflowQueue>();
         WorkflowMetaType type = getWorkflowMetaType(argsMap.get("metaTypeId"));
 

@@ -3,12 +3,12 @@
  */
 package module.metaWorkflow.scripts.manual;
 
-import module.metaWorkflow.domain.WorkflowMetaType;
-import module.metaWorkflow.domain.WorkflowMetaTypeVersion;
-import module.workflow.domain.WorkflowSystem;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.VirtualHost;
 import pt.ist.bennu.scheduler.custom.CustomTask;
+import module.metaWorkflow.domain.WorkflowMetaType;
+import module.metaWorkflow.domain.WorkflowMetaTypeVersion;
+import module.workflow.domain.WorkflowSystem;
 
 /**
  * @author João Antunes (joao.antunes@tagus.ist.utl.pt) - 14 de Jun de 2012
@@ -32,7 +32,7 @@ public class MigrateDataToMetaTypeVersion extends CustomTask {
         int totalNrMetaTypes = 0;
 
         try {
-            for (VirtualHost virtualHost : MyOrg.getInstance().getVirtualHosts()) {
+            for (VirtualHost virtualHost : MyOrg.getInstance().getVirtualHostsSet()) {
                 VirtualHost.setVirtualHostForThread(virtualHost);
 
                 //FENIX-345 passing all of the relations that were directly on WorkflowMetaType to WorkflowMetaTypeVersion

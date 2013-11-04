@@ -3,6 +3,17 @@
  */
 package module.workflow.scripts;
 
+import pt.ist.bennu.core.domain.MyOrg;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.domain.VirtualHost;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.TransactionalThread;
+import pt.ist.bennu.scheduler.custom.CustomTask;
+
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.TransactionError;
+import pt.ist.fenixframework.core.WriteOnReadError;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,16 +31,6 @@ import module.workflow.domain.WorkflowSystem;
 import module.workflow.domain.exceptions.DuplicateProcessFileNameException;
 
 import org.apache.commons.lang.StringUtils;
-
-import pt.ist.bennu.core.domain.MyOrg;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.TransactionalThread;
-import pt.ist.bennu.scheduler.custom.CustomTask;
-import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.core.TransactionError;
-import pt.ist.fenixframework.core.WriteOnReadError;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.HashMultiset;
@@ -220,7 +221,7 @@ public class MigrateProcessFilesToNewStructure extends CustomTask {
     @Override
     public void runTask() {
         // TODO Auto-generated method stub
-        for (VirtualHost virtualHost : MyOrg.getInstance().getVirtualHosts()) {
+        for (VirtualHost virtualHost : MyOrg.getInstance().getVirtualHostsSet()) {
             VirtualHost.setVirtualHostForThread(virtualHost);
             Set<WorkflowProcess> processes =
                     WorkflowSystem.getInstance() == null ? null : WorkflowSystem.getInstance().getProcesses();

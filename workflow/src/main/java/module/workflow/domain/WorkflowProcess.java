@@ -24,6 +24,18 @@
  */
 package module.workflow.domain;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.domain.VirtualHost;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.LegacyBundleUtil;
+import pt.ist.bennu.search.IndexDocument;
+import pt.ist.bennu.search.Indexable;
+import pt.ist.bennu.search.IndexableField;
+import pt.ist.bennu.search.Searchable;
+
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.core.WriteOnReadError;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -48,17 +60,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.security.Authenticate;
-import pt.ist.bennu.core.util.legacy.LegacyBundleUtil;
-import pt.ist.bennu.search.IndexDocument;
-import pt.ist.bennu.search.Indexable;
-import pt.ist.bennu.search.IndexableField;
-import pt.ist.bennu.search.Searchable;
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.core.WriteOnReadError;
 
 /**
  * 
@@ -583,8 +584,8 @@ public abstract class WorkflowProcess extends WorkflowProcess_Base implements Se
         addDeletedFiles(file);
         file.processRemoval();
         String nameToLog = file.getDisplayName() != null ? file.getDisplayName() : file.getFilename();
-        new FileRemoveLog(this, Authenticate.getUser(), file.getFilename(), nameToLog, LegacyBundleUtil.getLocalizedNamedFroClass(file
-                .getClass()));
+        new FileRemoveLog(this, Authenticate.getUser(), file.getFilename(), nameToLog,
+                LegacyBundleUtil.getLocalizedNamedFroClass(file.getClass()));
 
     }
 
@@ -972,7 +973,7 @@ public abstract class WorkflowProcess extends WorkflowProcess_Base implements Se
         IndexDocument document = new IndexDocument(this);
 
         if (!StringUtils.isEmpty(this.getProcessNumber())) {
-            document.indexField(WorkflowProcessIndex.NUMBER, this.getProcessNumber());
+            document.indexString(WorkflowProcessIndex.NUMBER, this.getProcessNumber());
         }
 
         if (isCommentingIndexingEnabled()) {
